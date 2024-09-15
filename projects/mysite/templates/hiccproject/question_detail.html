@@ -24,7 +24,7 @@
     const question_id = pathSegments.pop(); // URL의 마지막 값을 추출 (여기서는 1)
 
     // 템플릿 리터럴을 사용하여 URL을 동적으로 생성
-    const fetchUrl_q = `http://127.0.0.1:8000/home/question/${question_id}/view/`;
+    const fetchUrl_q = `http://127.0.0.1:8000/home/question/${question_id}/read/`;
 
     fetch(fetchUrl_q)
         .then((response) => {
@@ -50,7 +50,7 @@
         contentElement.textContent = data.content;
     }
 
-    const fetchUrl_a = `http://127.0.0.1:8000/home/question/${question_id}/answer/view/`;
+    const fetchUrl_a = `http://127.0.0.1:8000/home/question/${question_id}/answer/read/`;
 
     fetch(fetchUrl_a)
         .then((response) => {

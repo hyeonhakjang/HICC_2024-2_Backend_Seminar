@@ -19,7 +19,7 @@ def question_create(request):
 	else:
 		return render(request, 'hiccproject/question_create.html')
 
-def question_view(request):
+def question_read(request):
 	questions = Question.objects.all().values('id', 'subject', 'content', 'create_date')
 
 	return JsonResponse({'questions' : list(questions)}) # json 형식으로 설정 후 response
@@ -28,7 +28,7 @@ def question_detail(request, question_id):
 	question = get_object_or_404(Question, id = question_id) #question_id가 존재하지 않는 페이지로 들어가면 404 에러가 뜨도록 설정
 	return render(request, 'hiccproject/question_detail.html')
 
-def question_detail_view(request, question_id):
+def question_detail_read(request, question_id):
 	question = Question.objects.get(id = question_id)
 
 	question_data = {
@@ -41,7 +41,7 @@ def question_detail_view(request, question_id):
 	return JsonResponse(question_data)
 
 
-def answer_view(request, question_id):
+def answer_read(request, question_id):
 	question = Question.objects.get(id = question_id)
 
 	answers = Answer.objects.filter(question = question_id).values('id', 'question_id', 'content', 'create_date')
