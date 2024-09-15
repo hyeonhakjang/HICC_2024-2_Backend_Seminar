@@ -3,6 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>질문 게시판</title>
+    <style>
+        table {
+            border : 2px solid; border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid;
+            padding : 4px;
+        }
+        #register {
+            margin-top : 5px;
+        }
+    </style>
 </head>
 <body>
 <div>
@@ -14,24 +26,65 @@
             <th>작성일시</th>
         </tr>
         </thead>
-        <tbody>
-        <tr>
-            <td>1</td>
-            <td>
-                <a href="#">임시 질문입니다.</a>
-            </td>
-            <td>임시 시간입니다.</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>
-                <a href="#">임시 질문입니다.</a>
-            </td>
-            <td>임시 시간입니다.</td>
-        </tr>
+        <tbody id="question-list">
         </tbody>
     </table>
-    <button onclick="location.href='http://127.0.0.1:8000/home/question/create/' ">질문 등록하기</button>
+    <button id = "register" onclick="location.href='http://127.0.0.1:8000/home/question/create/'">질문 등록하기</button>
 </div>
 </body>
+<script>
+    const fetchUrl = 'http://127.0.0.1:8000/home/question/view/';
+
+    fetch(fetchUrl)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok.');
+            }
+            return response.json();
+        })
+        .then((result) => {
+            let data = result.questions; // 서버로부터 받은 데이터
+            console.log(data); // 데이터 확인
+            processData(data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+
+    function processData(data) {
+        const tbody = document.getElementById('question-list'); // <tbody> 선택
+
+        data.forEach(question => {
+            // <tr> 생성
+            const newRow = document.createElement('tr');
+
+            // 번호 <td> 생성
+            const numCell = document.createElement('td');
+            numCell.className = 'num';
+            numCell.textContent = question.id;
+            newRow.appendChild(numCell);
+
+            // 제목 <td> 생성
+            const subjectCell = document.createElement('td');
+            subjectCell.className = 'subject';
+
+            // 제목 링크 <a> 생성
+            const subjectLink = document.createElement('a');
+            subjectLink.href = `http://127.0.0.1:8000/home/question/${question.id}`;
+            subjectLink.textContent = question.subject;
+            subjectLink.style.cursor = 'pointer'; // 마우스를 링크 모양으로 변경
+            subjectCell.appendChild(subjectLink); // <td> 안에 링크 추가
+            newRow.appendChild(subjectCell);
+
+            // 작성일시 <td> 생성
+            const timeCell = document.createElement('td');
+            timeCell.className = 'time';
+            timeCell.textContent = new Date(question.create_date).toLocaleString();
+            newRow.appendChild(timeCell);
+
+            // 새 <tr>을 <tbody>에 추가
+            tbody.appendChild(newRow);
+        });
+    }
+</script>
 </html>

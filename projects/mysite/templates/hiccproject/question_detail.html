@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1 id="subject"></h1>
+    <div id="content"></div>
+    <h5><span id = "answer_count"></span>개의 답변이 있습니다.</h5>
+    <div>
+        <ul>
+        </ul>
+    </div>
+    <form action = "" method = "post">
+        <textarea id="answer_content" name = "answer_content" rows="15"></textarea>
+        <input type="submit" value="답변 등록하기">
+    </form>
+</body>
+<script>
+    // 현재 URL에서 question_id를 추출
+    const urlPath = window.location.pathname;
+    const pathSegments = urlPath.split('/').filter(Boolean); // 빈 문자열 요소 제거
+    const question_id = pathSegments.pop(); // URL의 마지막 값을 추출 (여기서는 1)
+
+    // 템플릿 리터럴을 사용하여 URL을 동적으로 생성
+    const fetchUrl_q = `http://127.0.0.1:8000/home/question/${question_id}/view/`;
+
+    fetch(fetchUrl_q)
+        .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok.');
+                }
+                return response.json();
+            })
+            .then((result) => {
+                let data = result; // 서버로부터 받은 데이터
+                console.log(data); // 데이터 확인
+                processQuestion(data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
+    function processQuestion(data) {
+        const subjectElement = document.getElementById('subject');
+        subjectElement.textContent = data.subject;
+
+        const contentElement = document.getElementById('content');
+        contentElement.textContent = data.content;
+    }
+
+    const fetchUrl_a = `http://127.0.0.1:8000/home/question/${question_id}/answer/view/`;
+
+    fetch(fetchUrl_a)
+        .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok.');
+                }
+                return response.json();
+            })
+            .then((result) => {
+                let data = result; // 서버로부터 받은 데이터
+                console.log(data); // 데이터 확인
+                processAnswer(data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
+        function processAnswer(data) {
+            // data.answers가 배열이라고 가정합니다.
+            if (Array.isArray(data.answers)) {
+                // answer_count를 설정
+                document.getElementById('answer_count').textContent = data.answers.length;
+
+                // <ul> 요소를 가져옵니다.
+                const ulElement = document.querySelector('ul');
+
+                // 기존의 <li> 요소를 지우고 새로운 요소를 추가할 준비를 합니다.
+                ulElement.innerHTML = '';
+
+                // answers 배열을 순회하면서 <li> 요소를 추가합니다.
+                data.answers.forEach(answer => {
+                    const liElement = document.createElement('li');
+                    liElement.className = 'answer';
+                    liElement.textContent = answer.content; // assuming answer.content is the text to display
+                    ulElement.appendChild(liElement);
+                });
+            } else {
+                console.error('Expected an array of answers but got:', data.answers);
+            }
+        }
+</script>
+</html>
