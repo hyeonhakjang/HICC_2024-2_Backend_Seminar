@@ -26,5 +26,5 @@ def login_view(request):
             login(request, user)
             return redirect('hiccproject:home')
         else:
-            return render(request, 'accounts/login.html')
-    return render(request, 'accounts/login.html')
+            return render(request, 'accounts/login_view.html')
+    return render(request, 'accounts/login_view.html')
