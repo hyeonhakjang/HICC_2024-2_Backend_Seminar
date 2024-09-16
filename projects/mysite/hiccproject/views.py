@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
+from django.contrib.auth.forms import UserCreationForm
 
 from django.http import JsonResponse
 from hiccproject.models import *
@@ -15,7 +16,7 @@ def question_create(request):
 	if request.method == 'POST':
 		question = Question(subject = request.POST.get('subject'), content = request.POST.get('content'), create_date=timezone.now())
 		question.save()
-		return redirect('question')
+		return redirect('hiccproject:question')
 	else:
 		return render(request, 'hiccproject/question_create.html')
 
@@ -52,4 +53,4 @@ def answer_create(request, question_id):
     question = get_object_or_404(Question, id = question_id)
     answer = Answer(question=question, content=request.POST.get('answer_content'), create_date=timezone.now())
     answer.save()
-    return redirect('question_detail', question_id=question.id)
+    return redirect('hiccproject:question_detail', question_id=question.id)
