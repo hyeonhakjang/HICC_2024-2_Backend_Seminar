@@ -23,8 +23,12 @@ def login_view(request):
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            login(request, user)
+            auth.login(request, user)
             return redirect('hiccproject:home')
         else:
             return render(request, 'accounts/login_view.html')
     return render(request, 'accounts/login_view.html')
+
+def logout_view(request):
+    auth.logout(request)
+    return redirect('hiccproject:home')
