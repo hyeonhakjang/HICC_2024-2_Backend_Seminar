@@ -53,3 +53,16 @@ def answer_create(request, question_id):
     answer = Answer(question=question, content=request.POST.get('answer_content'), create_date=timezone.now())
     answer.save()
     return redirect('question_detail', question_id=question.id)
+
+def question_update(request, question_id):
+	if request.method == 'POST':
+		question = Question(id = question_id, subject = request.POST.get('subject'), content = request.POST.get('content'), create_date=timezone.now())
+		question.save()
+		return redirect('question')
+	else:
+		return render(request, 'hiccproject/question_update.html')
+
+def question_delete(request, question_id):
+	question = get_object_or_404(Question, id = question_id)
+	question.delete()
+	return redirect('question')
