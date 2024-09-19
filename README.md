@@ -9,6 +9,6 @@
 | 주차  | 일시                   | 장소 | 세미나 주제 및 자료                                                        |
 | ----- | ---------------------- | ---- | ------------------------------------------------------------------ |
 | 1주차 | 9월 12일 (목) 오후 6시 | C710 | 백엔드 기초 [환경설정 설명서](https://github.com/hyeonhakjang/HICC_2024-2_Backend_Seminar/blob/main/%EC%9E%A5%EA%B3%A0%20%EA%B8%B0%EB%B3%B8%20%ED%99%98%EA%B2%BD%20%EC%84%A4%EC%A0%95.pdf) [1강 강의록](https://github.com/hyeonhakjang/HICC_2024-2_Backend_Seminar/blob/main/1%EA%B0%95%20%EB%B0%B1%EC%97%94%EB%93%9C%20%EA%B8%B0%EC%B4%88.pdf) |
-| 2주차 | 9월 19일 (목) 오후 6시 | C710 | ORM 데이터베이스                                            |
+| 2주차 | 9월 19일 (목) 오후 6시 | C710 | ORM 데이터베이스 [2강 강의록](https://github.com/hyeonhakjang/HICC_2024-2_Backend_Seminar/blob/main/1%EA%B0%95%20%EB%B0%B1%EC%97%94%EB%93%9C%20%EA%B8%B0%EC%B4%88.pdf)                                           |
 | 3주차 | 10월 4일 (금) 오후 6시 | C710 | 회원가입, 로그인 구현하기                                                |
 | 4주차 | 10월 10일 (목) 오후 6시 | C710 | 간단한 백엔드 API 설계 및 구현                                           |
