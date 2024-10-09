@@ -29,12 +29,12 @@ def question_read(request):
 
 	return JsonResponse({'questions' : list(questions)}) # json 형식으로 설정 후 response
 
-@login_required(login_url='accounts:login')
+
 def question_detail(request, question_id):
 	question = get_object_or_404(Question, id = question_id) #question_id가 존재하지 않는 페이지로 들어가면 404 에러가 뜨도록 설정
 	return render(request, 'hiccproject/question_detail.html')
 
-@login_required(login_url='accounts:login')
+
 def question_detail_read(request, question_id):
 	question = Question.objects.get(id = question_id)
 
@@ -47,7 +47,7 @@ def question_detail_read(request, question_id):
 
 	return JsonResponse(question_data)
 
-@login_required(login_url='accounts:login')
+
 def answer_read(request, question_id):
 	question = Question.objects.get(id = question_id)
 
@@ -83,6 +83,5 @@ def question_delete(request, question_id):
 	if request.user != question.author:
 		raise PermissionDenied  # 작성자와 사용자가 다르면 권한 오류 403 발생
 
-	question = get_object_or_404(Question, id = question_id)
 	question.delete()
 	return redirect('hiccproject:question')
