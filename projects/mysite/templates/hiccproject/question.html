@@ -23,6 +23,7 @@
         <tr>
             <th>번호</th>
             <th>제목</th>
+            <th>글쓴이</th>
             <th>작성일시</th>
         </tr>
         </thead>
@@ -75,6 +76,12 @@
             subjectLink.style.cursor = 'pointer'; // 마우스를 링크 모양으로 변경
             subjectCell.appendChild(subjectLink); // <td> 안에 링크 추가
             newRow.appendChild(subjectCell);
+
+            // 글쓴이 <td> 생성
+            const author = document.createElement('td');
+            author.className = 'author';
+            author.textContent = question.author__username;
+            newRow.appendChild(author);
 
             // 작성일시 <td> 생성
             const timeCell = document.createElement('td');

@@ -25,7 +25,7 @@ def question_create(request):
 
 
 def question_read(request):
-	questions = Question.objects.all().values('id', 'subject', 'content', 'create_date')
+	questions = Question.objects.all().values('id', 'subject', 'content', 'author__username', 'create_date')
 
 	return JsonResponse({'questions' : list(questions)}) # json 형식으로 설정 후 response
 
