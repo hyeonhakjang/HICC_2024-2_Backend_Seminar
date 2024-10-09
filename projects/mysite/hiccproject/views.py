@@ -61,3 +61,28 @@ def answer_create(request, question_id):
     answer = Answer(question=question, content=request.POST.get('answer_content'), create_date=timezone.now(), author = request.user)
     answer.save()
     return redirect('hiccproject:question_detail', question_id=question.id)
+
+@login_required(login_url='accounts:login')
+def question_update(request, question_id):
+	question = get_object_or_404(Question, id=question_id)
+
+	if request.user != question.author:
+		raise PermissionDenied  # 작성자와 사용자가 다르면 권한 오류 403 발생
+
+	if request.method == 'POST':
+		question = Question(id = question_id, subject = request.POST.get('subject'), content = request.POST.get('content'), create_date=timezone.now(), author = request.user)
+		question.save()
+		return redirect('hiccproject:question')
+	else:
+		return render(request, 'hiccproject/question_update.html')
+
+@login_required(login_url='accounts:login')
+def question_delete(request, question_id):
+	question = get_object_or_404(Question, id=question_id)
+
+	if request.user != question.author:
+		raise PermissionDenied  # 작성자와 사용자가 다르면 권한 오류 403 발생
+
+	question = get_object_or_404(Question, id = question_id)
+	question.delete()
+	return redirect('hiccproject:question')

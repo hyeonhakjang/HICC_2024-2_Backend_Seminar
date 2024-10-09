@@ -8,7 +8,6 @@
 <h1>안녕하세요 hicc 백엔드 세미나에 오신 것을 환영합니다.</h1>
 <p></p>
 <div><a href = "http://127.0.0.1:8000/home/question">질문 게시판</div>
-<footer>
     {% if user.is_authenticated %}
         <!-- 로그인이 되어 있으면 로그아웃 버튼 표시 -->
         <div><a href="http://127.0.0.1:8000/accounts/logout">로그아웃</a></div>
@@ -16,6 +15,7 @@
         <!-- 로그인이 되어 있지 않으면 로그인 버튼 표시 -->
         <div><a href="http://127.0.0.1:8000/accounts/login">로그인</a></div>
     {% endif %}
+<footer>
 </footer>
 </body>
 </html>

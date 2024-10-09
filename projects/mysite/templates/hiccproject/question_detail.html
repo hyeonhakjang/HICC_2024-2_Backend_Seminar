@@ -7,6 +7,9 @@
 <body>
     <h1 id="subject"></h1>
     <div id="content"></div>
+    <p></p>
+    <button id = "q_update">수정</button>
+    <button id = "q_delete">삭제</button>
     <h5><span id = "answer_count"></span>개의 답변이 있습니다.</h5>
     <div>
         <ul>
@@ -16,13 +19,17 @@
         <textarea id="answer_content" name = "answer_content" rows="15"></textarea>
         <input type="submit" value="답변 등록하기">
     </form>
-<div><a href = "http://127.0.0.1:8000/home/question/">이전</a></div>
 </body>
 <script>
     // 현재 URL에서 question_id를 추출
     const urlPath = window.location.pathname;
     const pathSegments = urlPath.split('/').filter(Boolean); // 빈 문자열 요소 제거
     const question_id = pathSegments.pop(); // URL의 마지막 값을 추출 (여기서는 1)
+
+    document.getElementById('q_update').addEventListener('click', function() {
+        const updateUrl = `http://127.0.0.1:8000/home/question/${question_id}/update/`;
+        window.location.href = updateUrl; // 해당 URL로 이동
+    });
 
     // 템플릿 리터럴을 사용하여 URL을 동적으로 생성
     const fetchUrl_q = `http://127.0.0.1:8000/home/question/${question_id}/read/`;
@@ -92,5 +99,12 @@
                 console.error('Expected an array of answers but got:', data.answers);
             }
         }
+    document.getElementById('q_delete').addEventListener('click', function() {
+    if (confirm("정말로 삭제하시겠습니까?")) {
+        // question_id를 직접 사용
+        const deleteUrl = `http://127.0.0.1:8000/home/question/${question_id}/delete/`;
+        location.href = deleteUrl; // 해당 URL로 이동
+    }
+});
 </script>
 </html>
