@@ -58,7 +58,7 @@ def question_update(request, question_id):
 	if request.method == 'POST':
 		question = Question(id = question_id, subject = request.POST.get('subject'), content = request.POST.get('content'), create_date=timezone.now())
 		question.save()
-		return redirect('question')
+		return redirect('question_detail', question_id = question.id)
 	else:
 		return render(request, 'hiccproject/question_update.html')
 
